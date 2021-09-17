@@ -7,38 +7,60 @@ let todo = document.querySelector(".p-3");
 /* pour les RDV couleur bleu */
 let wlist = document.querySelector(".p-4");
 
-/* création d'un post it */
-rdv.addEventListener("click", function() {
-    let affichage = document.querySelector(".tableau");
-    /* création d'une div avec la class couleur et textarea */
-    let card = document.createElement("card");
-    let text = document.createElement("textarea");
-    card.classList.add("vert");
-    /* création du BTN validation et l'evenement */
-    let btn_v = document.createElement("p");
-    btn_v.classList.add("btn_v");
-    btn_v.innerText = "Validation";
-    btn_v.addEventListener("click", function() {
-        /* evenement validation recup du textarea a rentré dans un "p" a créer */
+/* mise en place des evenement des bouton de création de post-it */
+evenement(rdv, "vert")
+evenement(urg, "rouge")
+evenement(todo, "jaune")
+evenement(wlist, "bleu")
+
+function add_data(data, contain) {
+    /* pas mis la recup du data dedans pour pouvoir y rentré les info sauvegardé plus tard */
+    let p = document.createElement("p");
+    p.innerText = data.value;
+    data.remove();
+    contain.insertBefore(p, contain.children[1]);
+}
+
+function btn_valid(contain, btn) {
+    btn.classList.add("btn_v");
+    btn.innerText = "Validation";
+    btn.addEventListener("click", function () {
+        /* evenement validation recup du textarea */
         console.log("valid");
-        let p = document.createElement("p");
         let saisie = document.querySelector("textarea");
-        p.innerText = saisie.value;
-        saisie.remove();
-        card.insertBefore(p, card.children[1]);
+        /* fourrage de l'info dans la card */
+        add_data(saisie, contain);
     });
-    /* création du BTN suppretion et l'evenement */
-    let btn_s = document.createElement("p");
-    btn_s.classList.add("btn_s");
-    btn_s.innerText = "Suppression";
-    btn_s.addEventListener("click", function() {
+}
+
+function btn_suppr(contain, btn) {
+    btn.classList.add("btn_s");
+    btn.innerText = "Suppression";
+    btn.addEventListener("click", function () {
         /* evenement suppression */
         console.log("suppr");
-        card.remove();
+        contain.remove();
     });
-    /* fourrage des div */
-    card.appendChild(btn_v);
-    card.appendChild(text);
-    card.appendChild(btn_s);
-    affichage.appendChild(card)
-})
+}
+
+function evenement(btn, couleur) {
+    /* création d'un post it */
+    btn.addEventListener("click", function () {
+        /* création d'une div avec la class couleur et textarea */
+        let card = document.createElement("card");
+        let text = document.createElement("textarea");
+        card.classList.add(couleur);
+        /* création du BTN validation et l'evenement */
+        let btn_v = document.createElement("p");
+        btn_valid(card, btn_v);
+        /* création du BTN suppretion et l'evenement */
+        let btn_s = document.createElement("p");
+        btn_suppr(card, btn_s)
+        /* fourrage des div */
+        card.appendChild(btn_v);
+        card.appendChild(text);
+        card.appendChild(btn_s);
+        let affichage = document.querySelector(".tableau");
+        affichage.appendChild(card);
+    })
+}
