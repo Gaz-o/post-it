@@ -1,0 +1,107 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+.header {
+    display: flex;
+    justify-content: space-around;
+    padding: 15px 0;
+}
+
+.p-1 {
+    background-color: #A7FA96;
+    width: 80px;
+    margin: 3px;
+    padding: 1px;
+    text-align: center;
+    border: 3px solid #6bbb5bfb;
+    border-radius: 18px;
+}
+
+.p-2 {
+    background-color: #FA9589;
+    width: 80px;
+    margin: 3px;
+    padding: 1px;
+    text-align: center;
+    border-radius: 18px;
+    border: 3px solid #b65348;
+}
+
+.p-3 {
+    background-color: #F5EA7C;
+    width: 80px;
+    margin: 3px;
+    padding: 1px;
+    text-align: center;
+    border: 3px solid #ccc145;
+    border-radius: 18px;
+}
+
+.p-4 {
+    background-color: #C5F3F5;
+    width: 80px;
+    margin: 3px;
+    padding: 1px;
+    text-align: center;
+    border: 3px solid #70d6db;
+    border-radius: 18px;
+}
+
+.tableau {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.tableau card {
+    margin: 5px;
+    width: 180px;
+    height: 150px;
+
+}
+
+.vert {
+    padding: 10px 0;
+    background-color: #A7FA96;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    text-align: center;
+    border: 3px solid #6bbb5bfb;
+    border-radius: 18px;
+}
+
+.rouge {
+    padding: 10px 0;
+    background-color: #FA9589;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    text-align: center;
+    border-radius: 18px;
+    border: 3px solid #b65348;
+}
+
+.jaune {
+    padding: 10px 0;
+    background-color: #F5EA7C;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    text-align: center;
+    border: 3px solid #ccc145;
+    border-radius: 18px;
+}
+
+.bleu {
+    padding: 10px 0;
+    background-color: #C5F3F5;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    text-align: center;
+    border: 3px solid #70d6db;
+    border-radius: 18px;
+}
