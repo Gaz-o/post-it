@@ -13,23 +13,25 @@ if (JSON.parse(localStorage.getItem("BDD")) != null) {
     tableau = JSON.parse(localStorage.getItem("BDD"))
 };
 
+let save_data = {
+    class: "",
+    data: "",
+}
+
 /* mise en place des evenement des bouton de création de post-it */
 evenement(rdv, "vert")
 evenement(urg, "rouge")
 evenement(todo, "jaune")
 evenement(wlist, "bleu")
 
-function btn_valid(contain, btn, couleur) {
+function btn_valid(contain, btn, couleur, entr) {
     btn.classList.add("btn_v");
     btn.innerText = "Validation";
     btn.addEventListener("click", function () {
         /* evenement validation recup du textarea */
+        let save = Object.create(save_data);
+        save.class = couleur;
         let saisie
-        let entr
-        let save_data = {
-            class: contain.classList.value,
-            data: contain.children[1].innerText,
-        }
         if (document.querySelector("textarea") != null) {
             saisie = document.querySelector("textarea").value;
             console.log("recup saisie de textarea");
@@ -38,21 +40,21 @@ function btn_valid(contain, btn, couleur) {
             /* pas mis la recup du data dedans pour pouvoir y rentré les info sauvegardé plus tard */
             p.classList.add("info")
             p.innerText = saisie;
-            save_data.data = saisie; 
+            save.data = saisie; 
             contain.insertBefore(p, contain.children[1]);
-            entr = tableau.push(save_data)
+            entr = tableau.push(save)
             document.querySelector("textarea").remove();
-            console.log("Save Ok", entr);
+            console.log("Save Ok", entr-=1);
             localStorage.clear()
             localStorage.setItem("BDD", JSON.stringify(tableau));
         } else {
             console.log("changement de couleur")
             couleur = "ok";
             contain.classList.toggle(couleur);
-            save_data.class = contain.classList.value;
-            console.log("Save modifier", tableau.length);
-            tableau.splice(tableau.length--, 1)
-            tableau.push(save_data)
+            save.class = contain.classList.value;
+            save.data = contain.children[1].innerText
+            console.log("Save modifier", entr);
+            tableau[entr] = save
             localStorage.clear()
             localStorage.setItem("BDD", JSON.stringify(tableau));
         }
@@ -79,7 +81,8 @@ function evenement(btn, couleur, data) {
         card.classList.add(couleur);
         /* création du BTN validation et l'evenement */
         let btn_v = document.createElement("p");
-        btn_valid(card, btn_v, couleur);
+        let entr
+        btn_valid(card, btn_v, couleur, entr);
         /* création du BTN suppretion et l'evenement */
         let btn_s = document.createElement("p");
         btn_suppr(card, btn_s)
