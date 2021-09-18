@@ -3,6 +3,11 @@
     margin: 0;
 }
 
+@font-face {
+    font-family: "Callgraphr"; 
+    src: local("./Calligraphr-Regular_3.ttf") format("truetype");
+   }
+
 .header {
     display: flex;
     justify-content: space-around;
