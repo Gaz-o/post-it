@@ -7,29 +7,52 @@ let todo = document.querySelector(".p-3");
 /* pour les RDV couleur bleu */
 let wlist = document.querySelector(".p-4");
 
+/* mise en place du tableau de local storage */
+let tableau = new Array
+if (JSON.parse(localStorage.getItem("BDD")) != null) {
+    tableau = JSON.parse(localStorage.getItem("BDD"))
+};
+
 /* mise en place des evenement des bouton de création de post-it */
 evenement(rdv, "vert")
 evenement(urg, "rouge")
 evenement(todo, "jaune")
 evenement(wlist, "bleu")
 
-function add_data(data, contain) {
-    /* pas mis la recup du data dedans pour pouvoir y rentré les info sauvegardé plus tard */
-    let p = document.createElement("p");
-    p.innerText = data.value;
-    data.remove();
-    contain.insertBefore(p, contain.children[1]);
-}
-
-function btn_valid(contain, btn) {
+function btn_valid(contain, btn, couleur) {
     btn.classList.add("btn_v");
     btn.innerText = "Validation";
     btn.addEventListener("click", function () {
         /* evenement validation recup du textarea */
-        console.log("valid");
-        let saisie = document.querySelector("textarea");
-        /* fourrage de l'info dans la card */
-        add_data(saisie, contain);
+        let saisie
+        console.log(document.querySelector("textarea"));
+        if (document.querySelector("textarea") != null) {
+            saisie = document.querySelector("textarea").value;
+            console.log("recup saisie de textarea");
+            /* fourrage de l'info dans la card */
+            let p = document.createElement("p");
+            /* pas mis la recup du data dedans pour pouvoir y rentré les info sauvegardé plus tard */
+            p.classList.add("info")
+            p.innerText = saisie;
+            contain.insertBefore(p, contain.children[1]);
+            document.querySelector("textarea").remove();
+            save_data.auto_save()
+        } else {
+            console.log("changement de couleur")
+            couleur = "ok";
+            contain.classList.toggle(couleur);
+        }
+        /* mise en objet literal et sauvegarde dans le localstorage */
+        let save_data = {
+            class: contain.classList.value,
+            data: contain.children[1].innerText,
+            auto_save: function () {
+                tableau.push(save_data)
+                console.log("Save Ok");
+                localStorage.clear()
+                localStorage.setItem("BDD", JSON.stringify(tableau));
+            }
+        }
     });
 }
 
@@ -43,7 +66,7 @@ function btn_suppr(contain, btn) {
     });
 }
 
-function evenement(btn, couleur) {
+function evenement(btn, couleur, data) {
     /* création d'un post it */
     btn.addEventListener("click", function () {
         /* création d'une div avec la class couleur et textarea */
@@ -52,7 +75,7 @@ function evenement(btn, couleur) {
         card.classList.add(couleur);
         /* création du BTN validation et l'evenement */
         let btn_v = document.createElement("p");
-        btn_valid(card, btn_v);
+        btn_valid(card, btn_v, couleur);
         /* création du BTN suppretion et l'evenement */
         let btn_s = document.createElement("p");
         btn_suppr(card, btn_s)
