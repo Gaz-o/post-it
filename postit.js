@@ -25,7 +25,11 @@ function btn_valid(contain, btn, couleur) {
     btn.addEventListener("click", function () {
         /* evenement validation recup du textarea */
         let saisie
-        console.log(document.querySelector("textarea"));
+        let entr
+        let save_data = {
+            class: contain.classList.value,
+            data: contain.children[1].innerText,
+        }
         if (document.querySelector("textarea") != null) {
             saisie = document.querySelector("textarea").value;
             console.log("recup saisie de textarea");
@@ -34,25 +38,25 @@ function btn_valid(contain, btn, couleur) {
             /* pas mis la recup du data dedans pour pouvoir y rentré les info sauvegardé plus tard */
             p.classList.add("info")
             p.innerText = saisie;
+            save_data.data = saisie; 
             contain.insertBefore(p, contain.children[1]);
+            entr = tableau.push(save_data)
             document.querySelector("textarea").remove();
-            save_data.auto_save()
+            console.log("Save Ok", entr);
+            localStorage.clear()
+            localStorage.setItem("BDD", JSON.stringify(tableau));
         } else {
             console.log("changement de couleur")
             couleur = "ok";
             contain.classList.toggle(couleur);
+            save_data.class = contain.classList.value;
+            console.log("Save modifier", tableau.length);
+            tableau.splice(tableau.length--, 1)
+            tableau.push(save_data)
+            localStorage.clear()
+            localStorage.setItem("BDD", JSON.stringify(tableau));
         }
         /* mise en objet literal et sauvegarde dans le localstorage */
-        let save_data = {
-            class: contain.classList.value,
-            data: contain.children[1].innerText,
-            auto_save: function () {
-                tableau.push(save_data)
-                console.log("Save Ok");
-                localStorage.clear()
-                localStorage.setItem("BDD", JSON.stringify(tableau));
-            }
-        }
     });
 }
 
