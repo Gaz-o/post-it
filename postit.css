@@ -106,6 +106,50 @@
     border-radius: 18px;
 }
 
-.ok {
+.vert-ok {
     opacity: 30%;
+    padding: 10px 0;
+    background-color: #A7FA96;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    text-align: center;
+    border: 3px solid #6bbb5bfb;
+    border-radius: 18px;
+}
+
+.rouge-ok {
+    opacity: 30%;
+    padding: 10px 0;
+    background-color: #FA9589;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    text-align: center;
+    border-radius: 18px;
+    border: 3px solid #b65348;
+}
+
+.jaune-ok {
+    opacity: 30%;
+    padding: 10px 0;
+    background-color: #F5EA7C;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    text-align: center;
+    border: 3px solid #ccc145;
+    border-radius: 18px;
+}
+
+.bleu-ok {
+    opacity: 30%;
+    padding: 10px 0;
+    background-color: #C5F3F5;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    text-align: center;
+    border: 3px solid #70d6db;
+    border-radius: 18px;
 }
