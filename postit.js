@@ -16,65 +16,62 @@ let save_data = {
 }
 
 for (let li in tableau) {
-    if ( tableau[li] === null) { 
-        tableau.splice(li, 1); 
-    } else {
-        let save = Object.create(save_data)
-        save = tableau[li]
-    
-        let card = document.createElement("card");
-        card.classList.add(save.class);
-        let btn_v = document.createElement("p");
-        btn_v.classList.add("btn_v");
-        btn_v.innerText = "Validation";
-        let p = document.createElement("p");
-        p.classList.add("info")
-        p.innerText = save.data
-        let btn_s = document.createElement("p");
-        btn_s.classList.add("btn_s");
-        btn_s.innerText = "Suppression";
-    
-        let d
-        if (tableau[li].data_sup != undefined) {
-            d = document.createElement("p");
-            d.classList.add("date")
-            save.data_sup = tableau[li].data_sup
-            d.innerText = save.data
-        }
-        let couleur = save.class
-        let coul = save.class_2
-        
-        btn_v.addEventListener("click", function () {
-            card.classList.toggle(coul);
-            card.classList.toggle(couleur);
-            save.class = card.classList.value;
-            if (save.class == coul) {
-                save.class_2 = couleur
-            } else {
-                save.class_2 = coul
-            }
-            tableau[li] = save
-            console.log("changement de couleur", save)
-            localStorage.clear()
-            localStorage.setItem("BDD", JSON.stringify(tableau));
-        });
-        
-        btn_s.addEventListener("click", function () {
-            delete tableau[li]
-            localStorage.clear()
-            localStorage.setItem("BDD", JSON.stringify(tableau));
-            console.log("suppr", li);
-            card.remove();
-        });
-        card.appendChild(btn_v);
-        card.appendChild(p);
-        if (tableau[li].data_sup != undefined) {
-            card.appendChild(d);
-        }
-        card.appendChild(btn_s);
-        let affichage = document.querySelector(".tableau");
-        affichage.appendChild(card);
+    console.log("chargement de la "+li+"\n",tableau[li]);
+    let save = Object.create(save_data)
+    save = tableau[li]
+
+    let card = document.createElement("card");
+    card.classList.add(save.class);
+    let btn_v = document.createElement("p");
+    btn_v.classList.add("btn_v");
+    btn_v.innerText = "Validation";
+    let p = document.createElement("p");
+    p.classList.add("info")
+    p.innerText = save.data
+    let btn_s = document.createElement("p");
+    btn_s.classList.add("btn_s");
+    btn_s.innerText = "Suppression";
+
+    let d
+    if (save.data_sup != undefined) {
+        d = document.createElement("p");
+        d.classList.add("date")
+        d.innerText = save.data_sup
     }
+    let couleur = save.class
+    let coul = save.class_2
+
+    btn_v.addEventListener("click", function () {
+        card.classList.toggle(coul);
+        card.classList.toggle(couleur);
+        save.class = card.classList.value;
+        if (save.class == coul) {
+            save.class_2 = couleur
+        } else {
+            save.class_2 = coul
+        }
+        tableau[li] = save
+        console.log("changement de couleur", save)
+        localStorage.clear()
+        localStorage.setItem("BDD", JSON.stringify(tableau));
+    });
+
+    btn_s.addEventListener("click", function () {
+        tableau.splice(li, 1);
+        localStorage.clear()
+        localStorage.setItem("BDD", JSON.stringify(tableau));
+        console.log("suppr", li);
+        card.remove();
+        window.location.reload()
+    });
+    card.appendChild(btn_v);
+    if (tableau[li].data_sup != undefined) {
+        card.appendChild(d);
+    }
+    card.appendChild(p);
+    card.appendChild(btn_s);
+    let affichage = document.querySelector(".tableau");
+    affichage.appendChild(card);
 }
 
 evenement(rdv, "vert", "date")
